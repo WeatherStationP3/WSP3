@@ -105,7 +105,7 @@
 		
 			
 			function getWeatherData(lon, lat){
-			var weatherURL = "https://crossorigin.me/http://api.openweathermap.org/data/2.5/weather?" + "lat=" + lat + "&lon=" + lon + "&appid="+WeatherAppID;
+			var weatherURL = "http://api.openweathermap.org/data/2.5/weather?" + "lat=" + lat + "&lon=" + lon + "&appid="+WeatherAppID;
 			sendRequest(weatherURL);
 			}
 			
@@ -117,7 +117,153 @@
 					var weather = {};
 					weather.icon = data.weather[0].id;
 					weather.weatherState = data.weather[0].main; /// Use for changing HTML
+					weather.info = data.weather[0].description;
 					weather.place = data.name;
+					
+					switch(weather.info){
+						case "broken clouds":
+							weather.url = "brokenclouds";
+							weather.state = "Broken Clouds";
+							break;
+						case "few clouds":
+							weather.state = "Few Clouds";
+							weather.url = "fewclouds"
+							break;
+						case "scattered clouds":
+							weather.state = "Scattered Clouds";
+							weather.url = "scatteredclouds";
+							break;
+						case "overcast clouds":
+							weather.state = "Overcast Clouds";
+							weather.url = "overcastclouds";
+							break;
+						case "clear sky":
+							weather.state = "Clear Sky";
+							weather.url = "clearsky";
+							break;
+						case "light rain":
+							weather.state = "Light Rain";
+							weather.url = "overcastclouds";
+							break;
+						case "moderate rain":
+							weather.state = "Moderate Rain";
+							weather.url = "moderaterain";
+							break;
+						case "heavy intensitivy rain":
+							weather.state = "Heavy Rain";
+							weather.url = "heavyrain";
+							break;
+						case "very heavy rain":
+							weather.state = "Very Heavy Rain";
+							weather.url = "veryheavyrain";
+							break;
+						case "extreme rain":
+							weather.state = "Extreme Rain";
+							weather.url = "extremerain";
+							break;
+						case "freezing rain":
+							weather.state = "Freezying Rain";
+							weather.url = "freezingrain";
+							break;
+						case "light intensitivy shower rain":
+							weather.state = "Light Shower Rain";
+							weather.url = "lightshowerrain";
+							break;
+						case "shower rain":
+							weather.state = "Shower Rain";
+							weather.url = "showerrain";
+							break;
+						case "heavy intensitivy shower rain":
+							weather.state = "Heavy Shower Rain";
+							weather.url = "heavyshowerrain";
+							break;
+						case "light snow":
+							weather.state = "Light Snow";
+							weather.url = "lightsnow";
+							break;
+						case "snow":
+							weather.state = "Snow";
+							weather.url = "snow";
+							break;
+						case "heavy snow":
+							weather.state = "Heavy Snow";
+							weather.url = "heavysnow";
+							break;
+						case "sleet":
+							weather.state = "Sleet";
+							weather.url = "sleet";
+							break;
+						case "shower sleet":
+							weather.state = "Shower Sleet";
+							weather.url = "showersleet";
+							break;
+						case "light rain and snow":
+							weather.state = "Light Rain And Snow";
+							weather.url = "lightrainandsnow";
+							break;
+						case "rain and snow":
+							weather.state = "Rain And Snow";
+							weather.url = "rainandsnow";
+							break;
+						case "light shower snow":
+							weather.state = "Light Shower Snow";
+							weather.url = "lightshowersnow";
+							break;
+						case "shower snow":
+							weather.state = "Shower Snow";
+							weather.url = "showersnow";
+							break;
+						case "heavy shower snow":
+							weather.state = "Heavy Shower Snow";
+							weather.url = "heavyshowersnow";
+							break;
+						case "thunderstorm with light rain":
+							weather.state = "Thunderstorm With Light Rain";
+							weather.url = "thunderstormwithlightrain";
+							break;
+						case "thunderstorm with rain":
+							weather.state = "Thunderstorm With Rain";
+							weather.url = "thunderstormwithrain";
+							break;
+						case "thunderstorm with heavy rain":
+							weather.state = "Thunderstorm With Heavy Rain";
+							weather.url = "thunderstormwithheavyrain";
+							break;
+						case "light thunderstorm":
+							weather.state = "Light Thunderstorm";
+							weather.url = "lightthunderstorm";
+							break;
+						case "heavy thunderstorm":
+							weather.state = "Heavy Thunderstorm";
+							weather.url = "heavythunderstorm";
+							break;
+						case "ragged thunderstorm":
+							weather.state = "Ragged Thunderstorm";
+							weather.url = "raggedthunderstorm";
+							break;
+						case "thunderstorm with light drizzle":
+							weather.state = "Thunderstorm With Light Drizzle";
+							weather.url = "thunderstormwithlightdrizzle";
+							break;
+						case "thunderstorm with drizzle":
+							weather.state = "Thunderstorm With Drizzle";
+							weather.url = "thunderstormwithdrizzle";
+							break;
+						case "thunderstorm":
+							weather.state = "Thunderstorm";
+							weather.url = "thunderstorm";
+							break;
+						case "thunderstorm with heavy drizzle":
+							weather.state = "Thunderstorm With Heazy Drizzle";
+							weather.url = "thunderstormwithheavydrizzle";
+							break;
+						default:
+							weather.state = "Special";
+							weather.url = "special";
+						
+						
+					
+					}
 					
 					update(weather);
 					
@@ -130,10 +276,11 @@
 			}
 			
 			function update(weather){
-			var alertString = weather.place + ", "+ weather.weatherState;
+			var alertString = weather.place + ", "+ weather.state;
 			alert(alertString);
-			var url = "https://weatherstation.5apps.com/"+weather.weatherState+".html";
+			var url = "https://weatherstation.5apps.com/"+weather.url+".html";
 			window.location.assign(url);
+			
 			
 			weatherState.innerHTML = weather.weatherState;
 			}
@@ -158,6 +305,7 @@
 }
 			
 			</script>
+			
 
 	</body>
 </html>
