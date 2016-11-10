@@ -16,10 +16,11 @@
 		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
 		
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+		<script type="text/javascript" src="getData.js"></script>
 		
 	</head>
 	<body class="is-loading">
-
+	<div id = "change">
 		<!-- Wrapper -->
 			<div id="wrapper">
 
@@ -28,46 +29,10 @@
 						<header>
 							<span class="avatar"><img src="images/avatar.png" alt="" /></span>
 							<h2>The Weather Station</h2>
-							<iframe width="100%" height="175" src="https://www.youtube.com/embed/K9HO23XjfZc?list=PLD7SPvDoEddbXvYcXc_7U7SK3L-qsYEBf" frameborder="0" allowfullscreen></iframe>
+							<iframe width="100%" height="175" src="https://www.youtube.com/embed/K9HO23XjfZc?list=PLD7SPvDoEddbXvYcXc_7U7SK3L-qsYEBf&controls=0&iv_load_policy=3&autoplay=1" frameborder="0" allowfullscreen></iframe>
 							<h6></h6>
 						</header>
-						<!--
-						<hr />
-						<h2>Extra Stuff!</h2>
-						<form method="post" action="#">
-							<div class="field">
-								<input type="text" name="name" id="name" placeholder="Name" />
-							</div>
-							<div class="field">
-								<input type="email" name="email" id="email" placeholder="Email" />
-							</div>
-							<div class="field">
-								<div class="select-wrapper">
-									<select name="department" id="department">
-										<option value="">Department</option>
-										<option value="sales">Sales</option>
-										<option value="tech">Tech Support</option>
-										<option value="null">/dev/null</option>
-									</select>
-								</div>
-							</div>
-							<div class="field">
-								<textarea name="message" id="message" placeholder="Message" rows="4"></textarea>
-							</div>
-							<div class="field">
-								<input type="checkbox" id="human" name="human" /><label for="human">I'm a human</label>
-							</div>
-							<div class="field">
-								<label>But are you a robot?</label>
-								<input type="radio" id="robot_yes" name="robot" /><label for="robot_yes">Yes</label>
-								<input type="radio" id="robot_no" name="robot" /><label for="robot_no">No</label>
-							</div>
-							<ul class="actions">
-								<li><a href="#" class="button">Get Started</a></li>
-							</ul>
-						</form>
-						<hr />
-						-->
+						
 						<footer>
 							
 							<ul class="icons">
@@ -95,217 +60,8 @@
 					document.body.className += (navigator.userAgent.match(/(MSIE|rv:11\.0)/) ? ' is-ie' : '');
 				}
 			</script>
-			<script>
-			var WeatherAppID = "5e10d8c9cc46f7e0c11bff71913a98ec";
-			
-			var lon;
-			var lat;
-			var weatherState; 
-			
-		
-			
-			function getWeatherData(lon, lat){
-			var weatherURL = "https://crossorigin.me/http://api.openweathermap.org/data/2.5/weather?" + "lat=" + lat + "&lon=" + lon + "&appid="+WeatherAppID;
-			sendRequest(weatherURL);
-			}
-			
-			function sendRequest(weatherURL){
-			var xmlhttp = new XMLHttpRequest();
-			xmlhttp.onreadystatechange = function(){
-				if(xmlhttp.readyState == 4 && xmlhttp.status == 200){
-					var data = JSON.parse(xmlhttp.responseText);
-					var weather = {};
-					weather.icon = data.weather[0].id;
-					weather.weatherState = data.weather[0].main; /// Use for changing HTML
-					weather.info = data.weather[0].description;
-					weather.place = data.name;
-					
-					switch(weather.info){
-						case "broken clouds":
-							weather.url = "brokenclouds";
-							weather.state = "Broken Clouds";
-							break;
-						case "few clouds":
-							weather.state = "Few Clouds";
-							weather.url = "fewclouds"
-							break;
-						case "scattered clouds":
-							weather.state = "Scattered Clouds";
-							weather.url = "scatteredclouds";
-							break;
-						case "overcast clouds":
-							weather.state = "Overcast Clouds";
-							weather.url = "overcastclouds";
-							break;
-						case "clear sky":
-							weather.state = "Clear Sky";
-							weather.url = "clearsky";
-							break;
-						case "light rain":
-							weather.state = "Light Rain";
-							weather.url = "overcastclouds";
-							break;
-						case "moderate rain":
-							weather.state = "Moderate Rain";
-							weather.url = "moderaterain";
-							break;
-						case "heavy intensitivy rain":
-							weather.state = "Heavy Rain";
-							weather.url = "heavyrain";
-							break;
-						case "very heavy rain":
-							weather.state = "Very Heavy Rain";
-							weather.url = "veryheavyrain";
-							break;
-						case "extreme rain":
-							weather.state = "Extreme Rain";
-							weather.url = "extremerain";
-							break;
-						case "freezing rain":
-							weather.state = "Freezying Rain";
-							weather.url = "freezingrain";
-							break;
-						case "light intensitivy shower rain":
-							weather.state = "Light Shower Rain";
-							weather.url = "lightshowerrain";
-							break;
-						case "shower rain":
-							weather.state = "Shower Rain";
-							weather.url = "showerrain";
-							break;
-						case "heavy intensitivy shower rain":
-							weather.state = "Heavy Shower Rain";
-							weather.url = "heavyshowerrain";
-							break;
-						case "light snow":
-							weather.state = "Light Snow";
-							weather.url = "lightsnow";
-							break;
-						case "snow":
-							weather.state = "Snow";
-							weather.url = "snow";
-							break;
-						case "heavy snow":
-							weather.state = "Heavy Snow";
-							weather.url = "heavysnow";
-							break;
-						case "sleet":
-							weather.state = "Sleet";
-							weather.url = "sleet";
-							break;
-						case "shower sleet":
-							weather.state = "Shower Sleet";
-							weather.url = "showersleet";
-							break;
-						case "light rain and snow":
-							weather.state = "Light Rain And Snow";
-							weather.url = "lightrainandsnow";
-							break;
-						case "rain and snow":
-							weather.state = "Rain And Snow";
-							weather.url = "rainandsnow";
-							break;
-						case "light shower snow":
-							weather.state = "Light Shower Snow";
-							weather.url = "lightshowersnow";
-							break;
-						case "shower snow":
-							weather.state = "Shower Snow";
-							weather.url = "showersnow";
-							break;
-						case "heavy shower snow":
-							weather.state = "Heavy Shower Snow";
-							weather.url = "heavyshowersnow";
-							break;
-						case "thunderstorm with light rain":
-							weather.state = "Thunderstorm With Light Rain";
-							weather.url = "thunderstormwithlightrain";
-							break;
-						case "thunderstorm with rain":
-							weather.state = "Thunderstorm With Rain";
-							weather.url = "thunderstormwithrain";
-							break;
-						case "thunderstorm with heavy rain":
-							weather.state = "Thunderstorm With Heavy Rain";
-							weather.url = "thunderstormwithheavyrain";
-							break;
-						case "light thunderstorm":
-							weather.state = "Light Thunderstorm";
-							weather.url = "lightthunderstorm";
-							break;
-						case "heavy thunderstorm":
-							weather.state = "Heavy Thunderstorm";
-							weather.url = "heavythunderstorm";
-							break;
-						case "ragged thunderstorm":
-							weather.state = "Ragged Thunderstorm";
-							weather.url = "raggedthunderstorm";
-							break;
-						case "thunderstorm with light drizzle":
-							weather.state = "Thunderstorm With Light Drizzle";
-							weather.url = "thunderstormwithlightdrizzle";
-							break;
-						case "thunderstorm with drizzle":
-							weather.state = "Thunderstorm With Drizzle";
-							weather.url = "thunderstormwithdrizzle";
-							break;
-						case "thunderstorm":
-							weather.state = "Thunderstorm";
-							weather.url = "thunderstorm";
-							break;
-						case "thunderstorm with heavy drizzle":
-							weather.state = "Thunderstorm With Heazy Drizzle";
-							weather.url = "thunderstormwithheavydrizzle";
-							break;
-						default:
-							weather.state = "Special";
-							weather.url = "special";
-						
-						
-					
-					}
-					
-					update(weather);
-					
-					}
-				};
-				xmlhttp.open("GET", weatherURL, true);
-				xmlhttp.send();
-				
-			
-			}
-			
-			function update(weather){
-			var alertString = weather.place + ", "+ weather.state;
-			alert(alertString);
-			var url = "https://weatherstation.5apps.com/"+weather.url+".html";
-			window.location.assign(url);
 			
 			
-			weatherState.innerHTML = weather.weatherState;
-			}
-			
-			window.onload= function(){
-			
-			getLocation();
-			
-			}
-			
-			function getLocation() {
-				if (navigator.geolocation) {
-				navigator.geolocation.getCurrentPosition(showPosition);
-				} else { 
-			x.innerHTML = "Geolocation is not supported by this browser.";
-    }
-}
-
-			function showPosition(position) {
-				
-				getWeatherData(position.coords.longitude, position.coords.latitude);
-}
-			
-			</script>
-			
-
+</div>
 	</body>
 </html>

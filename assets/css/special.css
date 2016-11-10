@@ -18,11 +18,15 @@
 		font: inherit;
 		vertical-align: baseline;
 	}
-
+	
 	article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {
 		display: block;
 	}
-
+	object {
+		width:100%;
+		height:100%;
+		overflow:hidden;
+	}
 	body {
 		line-height: 1;
 	}
