@@ -10,17 +10,17 @@
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, user-scalable=no">
 		<!--[if lte IE 8]><script src="assets/js/html5shiv.js"></script><![endif]-->
-		<link rel="stylesheet" href="assets/css/main.css" />
+		<link rel="stylesheet" href="assets/css/mist.css" />
 		<!--[if lte IE 9]><link rel="stylesheet" href="assets/css/ie9.css" /><![endif]-->
 		<!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
 		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
-		
+		<script type="text/javascript"></script>
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-		<script type="text/javascript" src="getData.js"></script>
+		<script type="text/javascript" src="lastfm.js"></script>
 		
 	</head>
 	<body class="is-loading">
-	<div id = "change">
+
 		<!-- Wrapper -->
 			<div id="wrapper">
 
@@ -29,10 +29,10 @@
 						<header>
 							<span class="avatar"><img src="images/avatar.png" alt="" /></span>
 							<h2>The Weather Station</h2>
-							<iframe width="100%" height="173" src="https://www.youtube.com/embed/QoTo6jYOec4?list=PLmEAZi_KX2tJCB32PLSElu_p34TbOplYx&controls=0&iv_load_policy=3&autoplay=1" frameborder="0" allowfullscreen></iframe>
+							<div id="player"></div>
 							<h6></h6>
 						</header>
-						
+				
 						<footer>
 							
 							<ul class="icons">
@@ -61,7 +61,7 @@
 				}
 			</script>
 			
+	
 			
-</div>
 	</body>
 </html>

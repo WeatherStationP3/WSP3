@@ -1,0 +1,232 @@
+    <!-- 1. The <iframe> (and video player) will replace this <div> tag. -->
+    <div id="player"></div>
+
+    <script>
+      // 2. This code loads the IFrame Player API code asynchronously.
+      var tag = document.createElement('script');
+
+      tag.src = "https://www.youtube.com/iframe_api";
+      var firstScriptTag = document.getElementsByTagName('script')[0];
+      firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+	  
+	  var videos = new Array(50);
+	  var idList = new Array(50);
+	  
+	  var songs = new Array(50);
+	  
+	  
+	  sendRequest();
+	  
+
+	
+	   
+
+	  
+	  function sendRequest(){
+	    var lastfmAPI = "b6e8094530532e1a6d2038400b8c6120";
+	    var lastfmURL = "http://ws.audioscrobbler.com/2.0/?method=tag.gettoptracks&tag=disco&api_key="+lastfmAPI+"&format=json";
+	  
+	    
+			var xmlhttp = new XMLHttpRequest();
+			xmlhttp.onreadystatechange = function(){
+				if(xmlhttp.readyState == 4 && xmlhttp.status == 200){
+					var data = JSON.parse(xmlhttp.responseText);
+					
+					
+					
+					alert(JSON.stringify(data));
+				
+					
+					for (var p = 0;p<50;p++){
+					
+					songs[p] = data.tracks.track[p].artist.name + " " + data.tracks.track[p].name ;
+					songs[p]=songs[p].replace(/ /g,"+");
+					}
+					
+					
+					
+					
+					
+					
+					
+					convertToIds(songs);
+					
+					
+					}
+				};
+				xmlhttp.open("GET", lastfmURL, true);
+				xmlhttp.send();
+				
+			
+			}
+			
+		function convertToIds(songs){
+		var temp = songs;
+		
+		alert(temp[0] + "HAHAHAHHAHAHAH");
+		for (var z = 0;z<50;z++){
+		
+		var ytAPI = "AIzaSyCGAKQ5V5tu1nFt4up1uheJe23kfdlBEQM";
+		
+		
+		
+		var youtubeURL = "https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=1&order=viewCount&q="+temp[z]+"&type=video&videoCategoryById=10&videoEmbeddable=true&key="+ytAPI;
+		
+		var xmlhttp = new XMLHttpRequest();
+			xmlhttp.onreadystatechange = function(){
+				if(xmlhttp.readyState == 4 && xmlhttp.status == 200){
+					var data = JSON.parse(xmlhttp.responseText);
+					songs[z] = data.items[0].id.videoId;
+					//alert(songs[z]);
+					
+					 
+					
+					
+					
+				
+					/*
+					for (var p = 0;p<50;p++){
+					songs[p] = data.tracks.track[p].artist.name + " - " + data.tracks.track[p].name ;
+					alert(songs[p]);
+					}
+					
+					
+					
+					
+					
+					
+					
+					convertToIds(songs);*/
+					
+					
+					}
+				};
+				xmlhttp.open("GET", youtubeURL, false);
+				xmlhttp.send();
+		
+
+
+		
+		
+		}
+		
+		alert(songs);
+		goToYT(songs);
+		}
+	  
+	 
+	  
+	 
+	  function goToYT(songs){
+	  
+	  return songs;
+	  
+	  
+	  }
+	 
+	  
+	  function getVideoArray(){
+	   
+	   
+	   videos[0] = "nnnn";
+	  for (var b = 0; b<50;b++){
+	  
+	  videos[b] = b;
+	  
+	  
+	  }
+	  alert(videos[0]);
+	  
+	  }
+	  
+	  
+	  
+	  
+      // 3. This function creates an <iframe> (and YouTube player)
+      //    after the API code downloads.
+      var player;
+	  var videoList, videoCount;
+      function onYouTubeIframeAPIReady() {
+        player = new YT.Player('player', {
+          height: '200',
+          width: '308',
+		  videoId: 'QoTo6jYOec4',
+		  
+          
+          events: {
+            'onReady': onPlayerReady,
+            'onStateChange': onPlayerStateChange
+          },
+		  playerVars: 
+		  {
+			controls:0,
+			autoplay:1,
+			
+		  }
+		  
+        });
+		player = false; 
+      }
+
+      // 4. The API will call this function when the video player is ready.
+      function onPlayerReady(event) {
+        
+		
+		// add ...
+		
+		
+		
+		
+		/*
+		event.target.cuePlaylist({
+		listType: 'playlist',
+        list: 'PLD7SPvDoEddbXvYcXc_7U7SK3L-qsYEBf',
+        autoplay: 1,
+        index:0,
+		
+		
+		});*/
+		
+		var num = Math.floor((Math.random() * 50) + 1);
+		var fn = function(){ event.target.loadVideoById(songs[Math.floor((Math.random() * 50) + 1)]); }
+        setTimeout(fn, 3000);
+		
+		event.target.setLoop();
+		
+		
+      }
+
+      // 5. The API calls this function when the player's state changes.
+      //    The function indicates that when playing a video (state=1),
+      //    the player should play for six seconds and then stop.
+ 
+      function onPlayerStateChange(event) {
+		if(event.data == 0){
+		
+		
+		var num = Math.floor((Math.random() * videoCount) + 1);
+		event.target.playVideoAt(num);
+		}
+		
+        if (event.data == YT.PlayerState.CUED) {
+          videoList = event.target.getPlaylist();
+
+        // to prevent adding new video and for the randomize
+        videoCount = videoList.length; 
+
+        // get the ids before randomize playlist, send it
+        sendIds(videoList);
+
+        // starting the player (like autoplay)
+        event.target.playVideo();
+		  
+		  
+        }
+		
+      }
+      function stopVideo() {
+        player.stopVideo();
+      }
+	  
+    </script>

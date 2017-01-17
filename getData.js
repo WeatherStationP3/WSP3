@@ -7,10 +7,7 @@
 			
 		
 			
-			function getWeatherData(lon, lat){
-			var weatherURL = "https://crossorigin.me/http://api.openweathermap.org/data/2.5/weather?" + "lat=" + lat + "&lon=" + lon + "&appid="+WeatherAppID;
-			sendRequest(weatherURL);
-			}
+			
 			
 			function sendRequest(weatherURL){
 			var xmlhttp = new XMLHttpRequest();
@@ -19,9 +16,13 @@
 					var data = JSON.parse(xmlhttp.responseText);
 					var weather = {};
 			
+			
+			
 					weather.weatherState = data.weather[0].main; /// Use for changing HTML
 					weather.info = data.weather[0].id;
 					weather.place = data.name;
+					
+					
 					
 					if (weather.info>=200 && weather.info<=232){
 						weather.state = "Thunderstorm";
@@ -134,6 +135,8 @@
 			function getLocation() {
 				if (navigator.geolocation) {
 				navigator.geolocation.getCurrentPosition(showPosition);
+				
+			
 				} else { 
 			alert('No Location');
     }
@@ -142,6 +145,15 @@
 			function showPosition(position) {
 				
 				getWeatherData(position.coords.longitude, position.coords.latitude);
+				
 }
 			
+			
+			function getWeatherData(lon, lat){
+				
+			var weatherURL = "http://api.openweathermap.org/data/2.5/weather?" + "lat=" + lat + "&lon=" + lon + "&appid="+WeatherAppID;
+			sendRequest(weatherURL);
+			
+			
+			}
 			

@@ -103,6 +103,109 @@
       var firstScriptTag = document.getElementsByTagName('script')[0];
       firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 
+	  
+	  var videos = new Array(50);
+	  var idList = new Array(50);
+	  var songs = new Array(50);
+	  
+	  
+	  sendRequest();
+	  
+	    function sendRequest(){
+	    var lastfmAPI = "b6e8094530532e1a6d2038400b8c6120";
+	    var lastfmURL = "http://ws.audioscrobbler.com/2.0/?method=tag.gettoptracks&tag=rain&api_key="+lastfmAPI+"&format=json";
+	  
+	    
+			var xmlhttp = new XMLHttpRequest();
+			xmlhttp.onreadystatechange = function(){
+				if(xmlhttp.readyState == 4 && xmlhttp.status == 200){
+					var data = JSON.parse(xmlhttp.responseText);
+					
+					
+					
+					alert(JSON.stringify(data));
+				
+					
+					for (var p = 0;p<50;p++){
+					
+					songs[p] = data.tracks.track[p].artist.name + " " + data.tracks.track[p].name ;
+					songs[p]=songs[p].replace(/ /g,"+");
+					}
+					
+					
+					
+					
+					
+					
+					
+					convertToIds(songs);
+					
+					
+					}
+				};
+				xmlhttp.open("GET", lastfmURL, true);
+				xmlhttp.send();
+				
+			
+			}
+	
+	
+	function convertToIds(songs){
+		var temp = songs;
+		
+		alert(temp[0] + "HAHAHAHHAHAHAH");
+		for (var z = 0;z<50;z++){
+		
+		var ytAPI = "AIzaSyCGAKQ5V5tu1nFt4up1uheJe23kfdlBEQM";
+		
+		
+		
+		var youtubeURL = "https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=1&order=viewCount&q="+temp[z]+"&type=video&videoEmbeddable=true&videoCategoryById=10&key="+ytAPI;
+		
+		var xmlhttp = new XMLHttpRequest();
+			xmlhttp.onreadystatechange = function(){
+				if(xmlhttp.readyState == 4 && xmlhttp.status == 200){
+					var data = JSON.parse(xmlhttp.responseText);
+					songs[z] = data.items[0].id.videoId;
+					//alert(songs[z]);
+					
+					 
+					
+					
+					
+				
+					/*
+					for (var p = 0;p<50;p++){
+					songs[p] = data.tracks.track[p].artist.name + " - " + data.tracks.track[p].name ;
+					alert(songs[p]);
+					}
+					
+					
+					
+					
+					
+					
+					
+					convertToIds(songs);*/
+					
+					
+					}
+				};
+				xmlhttp.open("GET", youtubeURL, false);
+				xmlhttp.send();
+		
+
+
+		
+		
+		}
+		
+		alert(songs);
+		goToYT(songs);
+		}
+	  
+	
+	
       // 3. This function creates an <iframe> (and YouTube player)
       //    after the API code downloads.
       var player;
@@ -111,6 +214,7 @@
         player = new YT.Player('player', {
           height: '200',
           width: '308',
+		  videoId: 'QoTo6jYOec4',
 		  
           
           events: {
@@ -133,17 +237,9 @@
 		
 		
 		
-		event.target.cuePlaylist({
-		listType: 'playlist',
-        list: 'PLmEAZi_KX2tJ-3W-iFwz3o8BPaZ6WvxkH',
-        autoplay: 1,
-        index:0,
-		
-		});
-		
-		var num = Math.floor((Math.random() * 100) + 1);
-		var fn = function(){ event.target.playVideoAt(num); }
-        setTimeout(fn, 600);
+		var num = Math.floor((Math.random() * 50) + 1);
+		var fn = function(){ event.target.loadVideoById(songs[Math.floor((Math.random() * 50) + 1)]); }
+        setTimeout(fn, 50);
 		
 		event.target.setLoop();
 		
@@ -159,7 +255,7 @@
 		
 		
 		var num = Math.floor((Math.random() * videoCount) + 1);
-		event.target.playVideoAt(num);
+		event.target.loadVideoById(songs[Math.floor((Math.random() * 50) + 1)]);
 		}
 		
         if (event.data == YT.PlayerState.CUED) {
