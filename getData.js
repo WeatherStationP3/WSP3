@@ -151,7 +151,7 @@
 			
 			function getWeatherData(lon, lat){
 				
-			var weatherURL = "http://api.openweathermap.org/data/2.5/weather?" + "lat=" + lat + "&lon=" + lon + "&appid="+WeatherAppID;
+			var weatherURL = "https://crossorigin.me/http://api.openweathermap.org/data/2.5/weather?" + "lat=" + lat + "&lon=" + lon + "&appid="+WeatherAppID;
 			sendRequest(weatherURL);
 			
 			
